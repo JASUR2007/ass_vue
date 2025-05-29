@@ -20,5 +20,4 @@ app.component('CIcon', CIcon)
 app.component('DocsComponents', DocsComponents)
 app.component('DocsExample', DocsExample)
 app.component('DocsIcons', DocsIcons)
-
 app.mount('#app')

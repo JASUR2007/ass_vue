@@ -10,15 +10,23 @@
               The page you are looking for was not found.
             </p>
           </div>
-          <CInputGroup class="input-prepend">
-            <CInputGroupText>
-              <CIcon icon="cil-magnifying-glass" />
-            </CInputGroupText>
-            <CFormInput type="text" placeholder="What are you looking for?" />
-            <CButton color="info">Search</CButton>
-          </CInputGroup>
+          <div class="container-fluid mt-4">
+            <h3>Return to Main</h3>
+            <CButton color="primary" @click="goToMain">Go to Main</CButton>
+          </div>
         </CCol>
       </CRow>
     </CContainer>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+import { CButton } from '@coreui/vue'
+
+const router = useRouter()
+
+function goToMain() {
+  router.push('/main')
+}
+</script>

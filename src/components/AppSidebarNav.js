@@ -3,7 +3,7 @@ import { RouterLink, useRoute } from 'vue-router'
 
 import { cilExternalLink } from '@coreui/icons'
 import { CBadge, CSidebarNav, CNavItem, CNavGroup, CNavTitle } from '@coreui/vue'
-import nav from '@/_nav.js'
+import Nav from '@/_nav.js'
 
 import simplebar from 'simplebar-vue'
 import 'simplebar-vue/dist/simplebar.min.css'
@@ -91,9 +91,9 @@ const AppSidebarNav = defineComponent({
             default: () => [
               item.icon
                 ? h(resolveComponent('CIcon'), {
-                    customClassName: 'nav-icon',
-                    name: item.icon,
-                  })
+                  customClassName: 'nav-icon',
+                  name: item.icon,
+                })
                 : h('span', { class: 'nav-icon' }, h('span', { class: 'nav-icon-bullet' })),
               item.name,
               item.external && h(resolveComponent('CIcon'), {
@@ -102,17 +102,17 @@ const AppSidebarNav = defineComponent({
                 size: 'sm'
               }),
               item.badge &&
-                h(
-                  CBadge,
-                  {
-                    class: 'ms-auto',
-                    color: item.badge.color,
-                    size: 'sm',
-                  },
-                  {
-                    default: () => item.badge.text,
-                  },
-                ),
+              h(
+                CBadge,
+                {
+                  class: 'ms-auto',
+                  color: item.badge.color,
+                  size: 'sm',
+                },
+                {
+                  default: () => item.badge.text,
+                },
+              ),
             ],
           },
         )
@@ -120,56 +120,56 @@ const AppSidebarNav = defineComponent({
 
       return item.to
         ? h(
-            RouterLink,
-            {
-              to: item.to,
-              custom: true,
-            },
-            {
-              default: (props) =>
-                h(
-                  resolveComponent(item.component),
-                  {
-                    active: props.isActive,
-                    as: 'div',
-                    href: props.href,
-                    onClick: () => props.navigate(),
-                  },
-                  {
-                    default: () => [
-                      item.icon
-                        ? h(resolveComponent('CIcon'), {
-                            customClassName: 'nav-icon',
-                            name: item.icon,
-                          })
-                        : h('span', { class: 'nav-icon' }, h('span', { class: 'nav-icon-bullet' })),
-                      item.name,
-                      item.badge &&
-                        h(
-                          CBadge,
-                          {
-                            class: 'ms-auto',
-                            color: item.badge.color,
-                            size: 'sm',
-                          },
-                          {
-                            default: () => item.badge.text,
-                          },
-                        ),
-                    ],
-                  },
-                ),
-            },
-          )
+          RouterLink,
+          {
+            to: item.to,
+            custom: true,
+          },
+          {
+            default: (props) =>
+              h(
+                resolveComponent(item.component),
+                {
+                  active: props.isActive,
+                  as: 'div',
+                  href: props.href,
+                  onClick: () => props.navigate(),
+                },
+                {
+                  default: () => [
+                    item.icon
+                      ? h(resolveComponent('CIcon'), {
+                        customClassName: 'nav-icon',
+                        name: item.icon,
+                      })
+                      : h('span', { class: 'nav-icon' }, h('span', { class: 'nav-icon-bullet' })),
+                    item.name,
+                    item.badge &&
+                    h(
+                      CBadge,
+                      {
+                        class: 'ms-auto',
+                        color: item.badge.color,
+                        size: 'sm',
+                      },
+                      {
+                        default: () => item.badge.text,
+                      },
+                    ),
+                  ],
+                },
+              ),
+          },
+        )
         : h(
-            resolveComponent(item.component),
-            {
-              as: 'div',
-            },
-            {
-              default: () => item.name,
-            },
-          )
+          resolveComponent(item.component),
+          {
+            as: 'div',
+          },
+          {
+            default: () => item.name,
+          },
+        )
     }
 
     return () =>
@@ -179,7 +179,7 @@ const AppSidebarNav = defineComponent({
           as: simplebar,
         },
         {
-          default: () => nav.map((item) => renderItem(item)),
+          default: () => Nav().map((item) => renderItem(item)),
         },
       )
   },

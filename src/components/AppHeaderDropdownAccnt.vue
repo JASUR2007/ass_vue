@@ -1,13 +1,64 @@
 <script setup>
-import avatar from '@/assets/images/avatars/8.jpg'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import img from '../../src/assets/images/avatars/2.jpg'
+import axios from 'axios'
 
-const itemsCount = 42
+const router = useRouter()
+
+// Новые счетчики
+const newSupportCount = ref(0)
+const newTicketCount  = ref(0)
+
+const logout = () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('user_id')
+  localStorage.removeItem('username')
+  localStorage.removeItem('accountType')
+  router.push('/login')
+}
+
+// Навигация по меню
+const goToTickets = () => {
+  router.push('/requests')
+}
+
+const goToSupport = () => {
+  router.push('/support')
+}
+
+async function fetchNewCounts() {
+  const token = localStorage.getItem('token')
+  try {
+    // Берём все support-requests и tickets
+    const [sRes, tRes] = await Promise.all([
+      axios.get(import.meta.env.VITE_API_URL +'/api/support-requests', {
+        headers: { Authorization: `Bearer ${token}` }
+      }),
+      axios.get(import.meta.env.VITE_API_URL +'/api/tickets', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+    ])
+    // Считаем только новые
+    newSupportCount.value = sRes.data.filter(r => r).length
+    newTicketCount.value  = tRes.data.filter(t => t.status === 'new').length
+  } catch (err) {
+    console.error('Failed to load new counts', err)
+  }
+}
+
+onMounted(fetchNewCounts)
 </script>
 
 <template>
   <CDropdown placement="bottom-end" variant="nav-item">
     <CDropdownToggle class="py-0 pe-0" :caret="false">
-      <CAvatar :src="avatar" size="md" />
+      <CAvatar
+        :src="img"
+        size="md"
+        alt="User Avatar"
+        v-bind="$attrs"
+      />
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
       <CDropdownHeader
@@ -16,41 +67,27 @@ const itemsCount = 42
       >
         Account
       </CDropdownHeader>
-      <CDropdownItem>
-        <CIcon icon="cil-bell" /> Updates
-        <CBadge color="info" class="ms-auto">{{ itemsCount }}</CBadge>
+
+      <CDropdownItem @click="goToTickets" style="cursor: pointer;">
+        <CIcon icon="cil-task" /> New Tickets
+        <CBadge color="danger" class="ms-auto">{{ newTicketCount }}</CBadge>
       </CDropdownItem>
-      <CDropdownItem>
-        <CIcon icon="cil-envelope-open" /> Messages
-        <CBadge color="success" class="ms-auto">{{ itemsCount }}</CBadge>
+
+      <CDropdownItem @click="goToSupport" style="cursor: pointer;">
+        <CIcon icon="cil-comment-square" /> New Support
+        <CBadge color="info" class="ms-auto">{{ newSupportCount }}</CBadge>
       </CDropdownItem>
-      <CDropdownItem>
-        <CIcon icon="cil-task" /> Tasks
-        <CBadge color="danger" class="ms-auto">{{ itemsCount }}</CBadge>
-      </CDropdownItem>
-      <CDropdownItem>
-        <CIcon icon="cil-comment-square" /> Comments
-        <CBadge color="warning" class="ms-auto">{{ itemsCount }}</CBadge>
-      </CDropdownItem>
+
       <CDropdownHeader
         component="h6"
         class="bg-body-secondary text-body-secondary fw-semibold my-2"
       >
         Settings
       </CDropdownHeader>
-      <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
-      <CDropdownItem> <CIcon icon="cil-settings" /> Settings </CDropdownItem>
-      <CDropdownItem>
-        <CIcon icon="cil-dollar" /> Payments
-        <CBadge color="secondary" class="ms-auto">{{ itemsCount }}</CBadge>
+
+      <CDropdownItem @click="logout" style="cursor:pointer">
+        <CIcon icon="cil-lock-locked" /> Logout
       </CDropdownItem>
-      <CDropdownItem>
-        <CIcon icon="cil-file" /> Projects
-        <CBadge color="primary" class="ms-auto">{{ itemsCount }}</CBadge>
-      </CDropdownItem>
-      <CDropdownDivider />
-      <CDropdownItem> <CIcon icon="cil-shield-alt" /> Lock Account </CDropdownItem>
-      <CDropdownItem> <CIcon icon="cil-lock-locked" /> Logout </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>
 </template>
