@@ -10,13 +10,12 @@ export default defineConfig(() => {
     css: {
       postcss: {
         plugins: [
-          autoprefixer({}), // add options if needed
+          autoprefixer(),
         ],
       },
     },
     resolve: {
       alias: [
-        // webpack path resolve to vitejs
         {
           find: /^~(.*)$/,
           replacement: '$1',
@@ -34,12 +33,25 @@ export default defineConfig(() => {
     },
     server: {
       port: 5174,
-      proxy: {
-        // https://vitejs.dev/config/server-options.html
-      },
     },
     optimizeDeps: {
       include: ['jwt-decode'],
+    },
+    build: {
+      chunkSizeWarningLimit: 1000, // увеличиваем лимит с 500 до 1000 KB
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return id
+                .toString()
+                .split('node_modules/')[1]
+                .split('/')[0]
+                .toString()
+            }
+          },
+        },
+      },
     },
   }
 })
