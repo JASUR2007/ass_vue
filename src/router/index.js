@@ -3,12 +3,12 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { jwtDecode } from 'jwt-decode';
 
 import DefaultLayout from '../layouts/DefaultLayout'
-import Weblayout from '../layouts/Weblayout'
+import WebLayout from '../layouts/Weblayout'
 const routes = [
     {
     path: '/',
     name: 'Web',
-    component: Weblayout,
+    component: WebLayout,
     redirect: '/main',
     children: [
       {
