@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { jwtDecode } from 'jwt-decode';
 
 import DefaultLayout from '../layouts/DefaultLayout'
-import WebLayout from '../layouts/Weblayout'
+import WebLayout from '../layouts/WebLayout'
 const routes = [
     {
     path: '/',
