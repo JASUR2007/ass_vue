@@ -5,7 +5,7 @@
     <CRow>
       <CCol v-for="item in kbaseData" :key="item.id" md="4" class="mb-4">
         <CCard @click="openModal(item)" class="h-100 cursor-pointer shadow-sm">
-          <CCardImage :src="item.image" alt="KBase Image" height="200" />
+          <CCardImage :src="item.img_base" alt="KBase Image" height="200" />
           <CCardBody>
             <CCardTitle>{{ item.title }}</CCardTitle>
           </CCardBody>
