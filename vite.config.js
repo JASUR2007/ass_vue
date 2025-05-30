@@ -6,7 +6,7 @@ import autoprefixer from 'autoprefixer'
 export default defineConfig(() => {
   return {
     plugins: [vue()],
-    base: '/ass_vue/',
+    base: './',
     css: {
       postcss: {
         plugins: [
