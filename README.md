@@ -131,7 +131,7 @@ coreui-free-vue-admin-template
 │   └── main.js
 ├── index.html   # html template
 ├── package.json
-└── vite.config.mjs
+└── vite.config.js
 ```
 
 ## Documentation
