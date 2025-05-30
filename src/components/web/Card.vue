@@ -8,6 +8,8 @@
           <CCardImage :src="item.img_base" alt="KBase Image" height="200" />
           <CCardBody>
             <CCardTitle>{{ item.title }}</CCardTitle>
+            <CCardText> Category: {{ item.category }}</CCardText>
+            <CCardText> {{ item.content }}</CCardText>
           </CCardBody>
         </CCard>
       </CCol>
