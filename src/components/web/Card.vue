@@ -9,7 +9,6 @@
           <CCardBody>
             <CCardTitle>{{ item.title }}</CCardTitle>
             <CCardText> Category: {{ item.category }}</CCardText>
-            <CCardText> {{ item.content }}</CCardText>
           </CCardBody>
         </CCard>
       </CCol>
@@ -21,7 +20,7 @@
       :title="selectedItem?.title"
       @close="modalVisible = false"
     >
-      <p>{{ selectedItem?.description }}</p>
+      <p>{{ selectedItem?.content }}</p>
     </KBaseModal>
   </div>
 </template>
